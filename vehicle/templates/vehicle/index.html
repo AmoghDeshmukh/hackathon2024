@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>GoRideTogether</title>
+
+
+</head>
+
+<body>
+
+    {% extends 'vehicle/base.html' %}
+
+
+    {% block body %}
+
+    <div class="topnav navbar d-flex align-items-center">
+        <div class="navbar-brand me-auto h1 fs-2 nav-brand d-flex align-items-center">GoRideTogether</div>
+
+        <!-- <a class="nav-links" href="{%  url 'vehicle:index' %}">Home</a> -->
+        {% if admin %}
+        <a class="nav-links" href="{% url 'vehicle:adminLogin' %}">Admin</a>
+        {% endif %}
+
+
+    </div>
+
+    <div class="main-body d-flex align-items-center justify-content-center">
+        <!-- show image from static file -->
+        <div class="container-fluid main-container" style="height: 100%; width: 80%;">
+            <div class="row" style="height: 100%;">
+                <div class="col-6 d-flex align-items-center justify-content-center p-3 vstack index-left"
+                    >
+
+                    <div class="h2 mb-4">Welcome to GoRideTogether</div>
+                    <div class="fs-5 fw-semibold mt-3 text-center">GoRideTogether is the world's best ride sharing and car rental
+                        platform.</div>
+
+
+                </div>
+                <div class="col-6 d-flex align-items-center" style="padding: 40px;">
+                    <section id="forForm" class="d-flex justify-content-center vstack">
+                        <div class="h4 mb-4 text-center">Select your account type</div>
+                        <form class="d-flex justify-content-center mb-4">
+                            <div class="form-check form-check-inline">
+
+                                <input class="form-check-input" type="radio" name="userType" id="useR" checked>
+                                <label class="form-check-label" for="useR">
+                                    User
+                                </label>
+
+                            </div>
+                            <div class="form-check form-check-inline">
+
+                                <input class="form-check-input" type="radio" name="userType" id="driveR">
+                                <label class="form-check-label" for="driveR">
+                                    Driver
+                                </label>
+
+                            </div>
+                            {% if not admin %}
+                            <div class="form-check form-check-inline">
+
+                                <input class="form-check-input" type="radio" name="userType" id="admin">
+                                <label class="form-check-label" for="admin">
+                                    Admin
+                                </label>
+
+                            </div>
+                            {% endif %}
+
+
+
+                        </form>
+
+                        <div class="d-flex justify-content-center" style="margin-top: 50px;">
+                            <section id="forUser" onsubmit="RadioValue()" class="d-inline-block me-4">
+
+                                <form action="" method="get" id="logIN">
+                                    {% csrf_token %}
+                                    <input role="button" style="width: 80px;" class="color-button" type="submit"
+                                        value="Log In" id="lInput">
+
+                                </form>
+
+                            </section>
+
+
+                            <section id="forDriver" onsubmit="RadioValue()" class="d-inline-block">
+
+                                <form action="" method="get" id="signUP">
+                                    {% csrf_token %}
+                                    <input role="button" style="width: 80px; " class="color-button" type="submit"
+                                        value="Sign Up" id="sInput">
+
+                                </form>
+
+                            </section>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script type="text/javascript">
+        function RadioValue() {
+            if (document.getElementById("useR").checked) {
+                document.getElementById("logIN").action = "{% url 'vehicle:userLogin' %}";
+                document.getElementById("signUP").action = "{% url 'vehicle:userSignUp' %}";
+            }
+            else if (document.getElementById("driveR").checked) {
+                document.getElementById("logIN").action = "{% url 'vehicle:driverLogin' %}";
+                document.getElementById("signUP").action = "{% url 'vehicle:driverSignUp' %}";
+            }
+            else if (document.getElementById("admin").checked) {
+                document.getElementById("logIN").action = "{% url 'vehicle:adminLogin' %}";
+                document.getElementById("signUP").action = "{% url 'vehicle:adminSignUp' %}";
+            }
+        }
+
+    </script>
+
+    {% endblock %}
+
+</body>
+
+</html>
